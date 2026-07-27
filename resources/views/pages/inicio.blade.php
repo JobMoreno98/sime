@@ -1,0 +1,205 @@
+@extends('layouts.landing')
+
+@section('content')
+
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>SIME: Inteligencia de<br>Datos para la Decisión<br>Institucional</h1>
+      <p>Visualiza el progreso de los objetivos estratégicos de la universidad para una gestión ágil y basada en evidencia.</p>
+    </div>
+    <div class="donut-card">
+      <span class="label">Cumplimiento Global</span>
+      <div class="donut-wrap">
+        <canvas id="donutChart" width="220" height="220"></canvas>
+        <div class="donut-center">
+          <span class="pct">78.4%</span>
+          <span class="yr">2025–2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap search-panel">
+    <div class="search-box">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="searchInput" placeholder="Buscar indicador, meta o departamento por palabra clave..." aria-label="Buscar indicador">
+      <button id="btnFiltrar">FILTRAR</button>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="section" id="indicadores">
+    <div class="section-head">
+        <h2>Indicadores de Eje</h2>
+        <a href="#metodologia" class="link-mini">Ver metodología <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"></circle><path d="M12 16v-5M12 8h.01"></path></svg></a>
+    </div>
+
+    <div class="eje-grid" id="ejeGrid">
+             
+        {{-- Cambia @foreach por @forelse --}}
+        @forelse($axes as $axis)
+             <div class="eje-card" data-c="{{ $axis->{'data-c'} }}">
+            <div class="eje-head">
+                <span>{{ $axis->name}}</span>
+            </div>
+            <div class="eje-body">
+                <span class="eje-count">N Indicadores</span>
+                <span class="eje-pct">N%</span>
+                  <ul class="eje-list">
+                    @forelse($axis->themes as $theme)
+                    <li>
+                        <span class="code">{{ $theme->code }}</span>
+                        <span class="lbl">{{ $theme->name }}</span>
+                        <canvas class="spark" data-trend="3,5,4,6,7,6,8" data-color="{{ $axis->color }}" width="46" height="20"></canvas>
+                    </li>
+                    @empty
+                        <li>Este eje no tiene temáticas registradas aún.</li>
+                    @endforelse
+
+                    
+                </ul>
+                <div class="eje-cta"><a href="#">Ver todos los indicadores →</a></div>
+            </div>
+        </div>
+        @empty
+            {{-- Esta sección se ejecuta si $axes está vacío --}}
+            <p>No hay indicadores registrados aún.</p>
+        @endforelse
+
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  <section class="section" style="padding-top:0">
+    <div class="stats-strip">
+      <div class="stat-item">
+        <div class="target"></div>
+        <div class="stat-text">
+          <div class="num-row"><span class="num">53</span><span>Indicadores estratégicos</span><span class="badge-estr">ESTRATÉGICO</span></div>
+          <p>Miden los resultados en el logro de los objetivos del PDI a nivel prioritario y temático.</p>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="target"></div>
+        <div class="stat-text">
+          <div class="num-row"><span class="num">0</span><span>Indicadores complementarios</span></div>
+          <p>Muestran información adicional que facilita entender el logro de los objetivos del PDI.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="metodologia">
+    <div class="ods-panel">
+      <div class="section-head" style="margin-bottom:0">
+        <h2>Alineación con los Objetivos de Desarrollo Sostenible</h2>
+        <a href="#" class="link-mini">Conocer más sobre los ODS <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="ods-grid" id="odsGrid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="reporte" style="padding-top:0">
+    <div class="cta-grid">
+      <div class="cta-card">
+        <div class="cta-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
+        </div>
+        <div class="cta-body">
+          <h3>Consulta la evolución de los indicadores</h3>
+          <p>Explora gráficas interactivas y analiza el comportamiento histórico.</p>
+          <a href="#" class="cta-btn">Ir a la consulta <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="cta-card">
+        <div class="cta-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        </div>
+        <div class="cta-body">
+          <h3>Descarga las bases de datos de los indicadores</h3>
+          <p>Disponibles en múltiples formatos para tu análisis y consulta.</p>
+          <div class="format-row">
+            <a href="#" class="format-chip">🌐 Web</a>
+            <a href="#" class="format-chip">📊 Excel</a>
+            <a href="#" class="format-chip">📄 CSV</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+@endsection
