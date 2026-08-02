@@ -109,7 +109,7 @@ class MenuHelper
             [
                 'title' => 'Plan de Desarrollo 2025-2031',
                 'items' => self::getMainNavItems()
-            ],
+            ]/*,
             [
                 'title' => 'Gestión Institucional',
                 'items' => self::getGestionItems()
@@ -117,7 +117,7 @@ class MenuHelper
             [
                 'title' => 'Otros',
                 'items' => self::getOthersItems()
-            ]
+            ]*/
         ];
     }
 

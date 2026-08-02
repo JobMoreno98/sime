@@ -1,5 +1,5 @@
 <header
-    class="sticky top-0 flex w-full bg-white border-gray-200 z-99999 dark:border-gray-800 dark:bg-gray-900 xl:border-b"
+    class="sticky top-0 flex w-full bg-[#0a2530] border-gray-200 z-99999 dark:border-gray-800 dark:bg-gray-900 xl:border-b"
     x-data="{
         isApplicationMenuOpen: false,
         toggleApplicationMenu() {
@@ -49,9 +49,9 @@
             </button>
 
             <!-- Logo (mobile only) -->
-            <a href="/" class="xl:hidden">
-                <img class="dark:hidden" src="/images/logo/logo.svg" alt="Logo" />
-                <img class="hidden dark:block" src="/images/logo/logo-dark.svg" alt="Logo" />
+            <a href="/admin/dashboard" class="xl:hidden">
+                <img class="dark:hidden" src="/images/logo/logo-cucsh-blanco.png" width="100" height="40" alt="Logo" />
+                <img class="hidden dark:block" src="/images/logo/logo-cucsh-blanco.png"  width="100" height="40"    alt="Logo" />
             </a>
 
             <!-- Application Menu Toggle (mobile only) -->
@@ -73,7 +73,7 @@
             <div class="flex items-center gap-2 2xsm:gap-3">
                 <!-- Theme Toggle Button -->
                 <button
-                    class="relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-200 rounded-full hover:text-dark-900 h-11 w-11 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+                    class="relative flex items-center justify-center text-white transition-colors bg-[#0a2530] border border-[#898a8c] rounded-full hover:text-dark-900 h-11 w-11 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
                     @click="$store.theme.toggle()">
                     <svg class="hidden dark:block" width="20" height="20" viewBox="0 0 20 20" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -89,8 +89,7 @@
                     </svg>
                 </button>
 
-                <!-- Notification Dropdown -->
-                <x-header.notification-dropdown />
+       
             </div>
 
             <!-- User Dropdown -->

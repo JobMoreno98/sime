@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Axis;
+
 
 class AxisController extends Controller
 {
@@ -11,16 +13,16 @@ class AxisController extends Controller
      */
     public function index()
     {
-        // 1. Jalamos los datos usando Eloquent (Equivalente al SELECT * FROM indicadores)
-        $axes = Axis::all(); 
+        $axes = Axis::withCount('themes')
+            ->get()
+            ->map(function ($axis) {
+                // Cálculo dinámico del porcentaje de avance
+                $axis->progress_percentage = $axis->calculateProgressPercentage(); 
+                return $axis;
+            });
 
-        // O si quieres filtrar con un WHERE:
-        // $axes = Axis::where('activo', 1)->get();
-
-        // 2. Pasamos los datos a la vista
-        return view('indicadores.index', compact('axes'));
+        return view('pages.admin.ejes', compact('axes'));
     }
-
     /**
      * Show the form for creating a new resource.
      */

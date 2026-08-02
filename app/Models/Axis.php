@@ -10,4 +10,9 @@ class Axis extends Model
     {
         return $this->hasMany(Theme::class, 'axis_id', 'id');
     }
+
+    public function calculateProgressPercentage()
+    {
+        return 75;
+    }
 }

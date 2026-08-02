@@ -518,26 +518,7 @@ document.querySelectorAll('canvas.spark').forEach(cv=>{
   ctx.fill();
 });
 
-/* ---------------- Render ODS ---------------- */
-const odsGrid = document.getElementById('odsGrid');
-ODS.forEach(o=>{
-  const el = document.createElement('div');
-  el.className = 'ods-item';
-  el.style.background = o.color;
-  el.innerHTML = `
-    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>
-    <div>
-      <div class="num">${o.n}</div>
-      <div>${o.title}</div>
-    </div>
-  `;
-  odsGrid.appendChild(el);
-});
-const moreEl = document.createElement('a');
-moreEl.href = '#';
-moreEl.className = 'ods-item ods-more';
-moreEl.innerHTML = `<span style="align-self:center;font-size:20px;">···</span><span style="text-align:center;">Ver los 17 ODS</span>`;
-odsGrid.appendChild(moreEl);
+
 
 /* ---------------- Donut chart ---------------- */
 (function drawDonut(){
@@ -550,7 +531,7 @@ odsGrid.appendChild(moreEl);
   ctx.scale(dpr, dpr);
 
   const cx = size/2, cy = size/2, radius = 86, lineWidth = 20;
-  const pctTarget = 78.4;
+  const pctTarget = 77.01;
   const startAngle = -Math.PI/2;
 
   let progress = 0;

@@ -3,6 +3,8 @@
 @section('content')
 
 
+
+
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
@@ -14,7 +16,7 @@
       <div class="donut-wrap">
         <canvas id="donutChart" width="220" height="220"></canvas>
         <div class="donut-center">
-          <span class="pct">78.4%</span>
+          <span class="pct">77.01%</span>
           <span class="yr">2025–2026</span>
         </div>
       </div>
@@ -80,14 +82,14 @@
                 <span>{{ $axis->name}}</span>
             </div>
             <div class="eje-body">
-                <span class="eje-count">N Indicadores</span>
-                <span class="eje-pct">N%</span>
+                <span class="eje-count">{{ $axis->total_indicators }} Indicadores</span>
+                <span class="eje-pct">{{$axis->average_percentage}}%</span>
                   <ul class="eje-list">
                     @forelse($axis->themes as $theme)
                     <li>
                         <span class="code">{{ $theme->code }}</span>
                         <span class="lbl">{{ $theme->name }}</span>
-                        <canvas class="spark" data-trend="3,5,4,6,7,6,8" data-color="{{ $axis->color }}" width="46" height="20"></canvas>
+                        <canvas style="display: none;" class="spark" data-trend="3,5,4,6,7,6,8" data-color="{{ $axis->color }}" width="46" height="20"></canvas>
                     </li>
                     @empty
                         <li>Este eje no tiene temáticas registradas aún.</li>
@@ -95,7 +97,7 @@
 
                     
                 </ul>
-                <div class="eje-cta"><a href="#">Ver todos los indicadores →</a></div>
+                <div class="eje-cta"><a href="/indicadores?axis={{$axis->axis_number}}">Ver todos los indicadores →</a></div>
             </div>
         </div>
         @empty
@@ -147,7 +149,7 @@
       <div class="stat-item">
         <div class="target"></div>
         <div class="stat-text">
-          <div class="num-row"><span class="num">53</span><span>Indicadores estratégicos</span><span class="badge-estr">ESTRATÉGICO</span></div>
+          <div class="num-row"><span class="num">{{ $countAllIndicators }} </span><span>Indicadores estratégicos</span><span class="badge-estr">ESTRATÉGICO</span></div>
           <p>Miden los resultados en el logro de los objetivos del PDI a nivel prioritario y temático.</p>
         </div>
       </div>
@@ -161,15 +163,7 @@
     </div>
   </section>
 
-  <section class="section" id="metodologia">
-    <div class="ods-panel">
-      <div class="section-head" style="margin-bottom:0">
-        <h2>Alineación con los Objetivos de Desarrollo Sostenible</h2>
-        <a href="#" class="link-mini">Conocer más sobre los ODS <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-      <div class="ods-grid" id="odsGrid"></div>
-    </div>
-  </section>
+
 
   <section class="section" id="reporte" style="padding-top:0">
     <div class="cta-grid">

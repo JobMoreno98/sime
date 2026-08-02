@@ -3,12 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AxisController;
 
 Route::get('/', [HomeController::class, 'index'])->name('inicio');
 
-Route::get('/indicadores', function () {
-    return view('pages.indicadores', ['title' => 'Indicadores']);
-})->name('indicadores');
+
+Route::get('/indicadores', [HomeController::class, 'indicators'])->name('indicadores');
 
 
 Route::get('/detalle-indicador/{eje}/{tematica}', function ($eje, $tematica) {
@@ -19,10 +19,8 @@ Route::get('/detalle-indicador/{eje}/{tematica}', function ($eje, $tematica) {
 })->name('detalle-indicador');
 
 
-
-Route::get('/admin/ejes', function () {
-    return view('pages.admin.ejes', ['title' => 'Ejes estratégicos']);
-})->name('admin-ejes');
+Route::get('/admin/ejes', [AxisController::class, 'index'])
+    ->name('admin-ejes');
 
 
 Route::get('/admin/tematicas', function () {
@@ -33,10 +31,7 @@ Route::get('/admin/indicadores', function () {
     return view('pages.admin.indicadores', ['title' => 'Indicadores']);
 })->name('admin-indicadores');
 
-// dashboard pages
-Route::get('/admin/dashboard', function () {
-    return view('pages.admin.dashboard', ['title' => 'Dashboard']);
-})->name('admin-dashboard');
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin-dashboard');
 
 // dashboard pages
 Route::get('/dashboard', function () {

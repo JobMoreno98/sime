@@ -95,7 +95,7 @@
   /* ---------- Layout below ---------- */
   main.wrap{padding-top:28px;padding-bottom:44px;}
 
-  .tools-grid{display:grid;grid-template-columns:4fr 1fr;gap:16px;margin-bottom:20px;}
+  .tools-grid{display:grid;grid-template-columns:3fr 1fr;gap:16px;margin-bottom:20px;}
   .panel{
     background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
     box-shadow:var(--shadow-card);padding:22px 24px;
@@ -106,7 +106,7 @@
   }
   .panel h3 svg{color:var(--ink-400);}
 
-  .filters-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 16px;}
+  .filters-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 16px;}
   .field{display:flex;flex-direction:column;gap:6px;}
   .field label{font-size:11.5px;font-weight:700;color:var(--ink-600);}
   .field select{
@@ -117,7 +117,7 @@
   }
   .field select:hover{border-color:var(--teal-600);}
 
-  .filters-actions{display:flex;align-items:center;gap:18px;margin-top:18px;}
+  .filters-actions{display:flex;align-items:center;gap:18px;margin-top:18px; width: max-content;}
   .btn-primary{
     background:var(--navy-900);color:#fff;border:none;padding:11px 20px;border-radius:8px;
     font-weight:700;font-size:12.8px;transition:.15s;
@@ -262,7 +262,8 @@
   @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
 </style>
 
-<section class="page-top">
+
+<section class="page-top" style="display: none;">
   <div class="wrap" style="padding-top:26px;">
     <div class="stats-card">
       <div class="stat">
@@ -298,47 +299,42 @@
 
   <div class="tools-grid">
     <div class="panel">
-      <h3>FILTRAR INDICADORES <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16l-6 8v6l-4 2v-8L4 4Z"/></svg></h3>
-      <div class="filters-grid">
-        <div class="field">
-          <label>Eje</label>
-          <select><option>1. Formación de calidad para la vida</option><option>2. Generar conocimiento</option><option>3. Vínculo social</option></select>
+      <form method="GET">
+        <h3>FILTRAR INDICADORES <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16l-6 8v6l-4 2v-8L4 4Z"/></svg></h3>
+        <div class="filters-grid">
+          <div class="field">
+            <label>Eje</label>
+            <select name="axis">
+                <option>Todos</option>
+              @foreach($axes as $axis)
+                <option value="{{ $axis->axis_number}}" @if($request->axis == $axis->axis_number) selected @endif> {{ $axis->axis_number}}. {{ $axis->name }} </option>
+              @endforeach
+            </select>
+          </div>
+          <div class="field">
+            <label>Temática</label>
+            <select name="theme">
+              <option>Todas</option>
+              @foreach($themes as $theme)
+                <option value="{{ $theme->code}}" @if($request->theme == $theme->code) selected @endif>{{ $theme->code}}. {{ $theme->name }} </option>
+              @endforeach
+            </select>
+          </div>
+
+          <div class="filters-actions">
+          <button class="btn-primary" id="btnAplicar" type="submit">Aplicar filtros</button>
+          <a class="btn-ghost" href="/indicadores" id="btnLimpiar" type="button" >Limpiar filtros
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>
+          </a>
         </div>
-        <div class="field">
-          <label>Temática</label>
-          <select><option>Todas</option></select>
+
         </div>
-        <div class="field">
-          <label>Tipo</label>
-          <select><option>Todos</option></select>
-        </div>
-        <div class="field">
-          <label>Periodicidad</label>
-          <select><option>Todas</option></select>
-        </div>
-        <div class="field">
-          <label>Nivel Jerárquico</label>
-          <select><option>Todos</option></select>
-        </div>
-        <div class="field">
-          <label>ODS</label>
-          <select><option>Todos</option></select>
-        </div>
-        <div class="field">
-          <label>Orden</label>
-          <select><option>Más recientes</option></select>
-        </div>
-      </div>
-      <div class="filters-actions">
-        <button class="btn-primary" id="btnAplicar">Aplicar filtros</button>
-        <button class="btn-ghost" id="btnLimpiar">Limpiar filtros
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>
-        </button>
-      </div>
+        
+      </form>
     </div>
 
     <div class="panel">
-      <h3>PORCENTAJE DE CUMPLIMIENTO DE META</h3>
+      <h3>% CUMPLIMIENTO DE META</h3>
       <div class="legend-list">
         <div class="legend-item riesgo"><span class="legend-dot"></span> Menor a 80%</div>
         <div class="legend-item proceso"><span class="legend-dot"></span> 80% al 99%</div>
@@ -347,12 +343,12 @@
     </div>
   </div>
 
-  <div class="view-toggle">
+  <div class="view-toggle" style="display: none;">
     <button class="active" id="viewList">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
       Vista de lista
     </button>
-    <button id="viewCard">
+    <button id="viewCard" style="display: none;">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       Vista de tarjeta
     </button>
@@ -368,15 +364,75 @@
           <th>Meta</th>
           <th>Cumplimiento</th>
           <th>Última actualización</th>
-          <th>Tendencia</th>
-          <th>Acciones</th>
+          <th style="display: none;">Tendencia</th>
         </tr>
       </thead>
-      <tbody id="tableBody"></tbody>
+
+      <tbody>
+        @foreach($indicators as $indicator)
+        @php
+          $porcentaje = ($indicator->goals[0]->target_value * 100) / $indicator->goals[1]->target_value;
+
+           $estado = $porcentaje < 80
+            ? 'riesgo'
+            : ($porcentaje < 100 ? 'proceso' : 'meta');
+        @endphp
+        <tr>
+            <td>
+                <div class="ind-cell">
+                    <div class="ind-ico" style="background:{{ $indicator->theme->axis->color}}">
+                        {!! $indicator->icon_svg !!}
+                    </div>
+
+                    <div class="ind-text">
+                        <a href="#">
+                            <strong>{{ $indicator->name }}</strong>
+                            <span>{{ $indicator->theme->name }}</span>
+                        </a>
+                    </div>
+                </div>
+            </td>
+
+            <td>
+                <span class="badge {{ $estado }}">
+                    En {{ $estado }}
+                </span>
+            </td>
+
+            <td>{{ number_format($indicator->goals[0]->target_value) }}</td>
+
+            <td>{{ number_format($indicator->goals[1]->target_value) }}</td>
+
+            <td class="cumpl-cell">
+                <div class="cumpl-pct {{ $estado }}">
+                    {{ number_format($porcentaje, 2) }}%
+                </div>
+
+                <div class="cumpl-bar {{ $estado }}">
+                    <span style="width: {{ number_format($porcentaje, 2) }}%"></span>
+                </div>
+            </td>
+
+            <td>{{ $indicator->updated_at->format('d/m/Y') }}</td>
+
+            <td style="display: none;">
+                <canvas
+                    class="trend-canvas"
+                    width="70"
+                    height="28"
+                    data-trend="{{ $indicator->trend }}"
+                    data-color="#274a7a">
+                </canvas>
+            </td>
+
+            
+        </tr>
+        @endforeach
+        </tbody>
     </table>
   </div>
 
-  <div class="pagination" id="pagination">
+  <div class="pagination" id="pagination" style="display: none;">
     <button aria-label="Anterior">‹</button>
     <button class="active">1</button>
     <button>2</button>
