@@ -33,40 +33,6 @@
 </section>
 
 <main class="wrap">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <section class="section" id="indicadores">
     <div class="section-head">
         <h2>Indicadores de Eje</h2>

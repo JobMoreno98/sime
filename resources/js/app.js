@@ -183,20 +183,26 @@ function applyFilters() {
 }
 
 // Event Listeners dinámicos
-searchInput.addEventListener('input', applyFilters);
-filterEje.addEventListener('change', applyFilters);
-filterPeriod.addEventListener('change', applyFilters);
-filterStatusBoxes.forEach(box => box.addEventListener('change', applyFilters));
 
-resetBtn.addEventListener('click', () => {
-  searchInput.value = '';
-  filterEje.value = 'todos';
-  filterPeriod.value = 'todos';
-  filterStatusBoxes.forEach(cb => cb.checked = true);
-  renderCards(indicadores);
+searchInput?.addEventListener('input', applyFilters);
+filterEje?.addEventListener('change', applyFilters);
+filterPeriod?.addEventListener('change', applyFilters);
+filterStatusBoxes?.forEach(box => box.addEventListener('change', applyFilters));
+
+resetBtn?.addEventListener('click', () => {
+  if (searchInput) searchInput.value = '';
+  if (filterEje) filterEje.value = 'todos';
+  if (filterPeriod) filterPeriod.value = 'todos';
+  filterStatusBoxes?.forEach(cb => cb.checked = true);
+  
+  if (typeof renderCards === 'function' && typeof indicadores !== 'undefined') {
+      renderCards(indicadores);
+  }
 });
 
 // Inicialización inicial
 document.addEventListener('DOMContentLoaded', () => {
-  renderCards(indicadores);
+  if (typeof renderCards === 'function' && typeof indicadores !== 'undefined') {
+      renderCards(indicadores);
+  }
 });

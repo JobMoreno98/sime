@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AxisCreateRequest;
 use Illuminate\Http\Request;
 use App\Models\Axis;
 
@@ -17,7 +18,7 @@ class AxisController extends Controller
             ->get()
             ->map(function ($axis) {
                 // Cálculo dinámico del porcentaje de avance
-                $axis->progress_percentage = $axis->calculateProgressPercentage(); 
+                $axis->progress_percentage = $axis->calculateProgressPercentage();
                 return $axis;
             });
 
@@ -34,9 +35,10 @@ class AxisController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AxisCreateRequest $request)
     {
-        //
+        $axe = Axis::create($request->validated());
+        return redirect()->route('ejes.index');
     }
 
     /**

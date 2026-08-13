@@ -82,13 +82,13 @@
     getSemaforoBadge(estatus) {
         switch(estatus) {
             case 'En Meta':
-                return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800/30';
+                return 'bg-emerald-50 text-emerald-700 border-emerald-200';
             case 'En Riesgo':
-                return 'bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400 border-amber-200 dark:border-amber-800/30';
+                return 'bg-amber-50 text-amber-700 border-amber-200';
             case 'Crítico':
-                return 'bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400 border-rose-200 dark:border-rose-800/30';
+                return 'bg-rose-50 text-rose-700 border-rose-200';
             default:
-                return 'bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-300';
+                return 'bg-gray-50 text-gray-700';
         }
     },
 
@@ -118,17 +118,17 @@
     editarIndicador(row) { console.log('Editar indicador:', row.codigo); },
     masAcciones(row) { console.log('Más acciones:', row.codigo); }
 }">
-    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white pt-4 dark:border-white/[0.05] dark:bg-white/[0.03] shadow-sm">
+    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white pt-4 shadow-sm">
         
         <!-- Header con Buscador y Filtros Multinivel -->
         <div class="flex flex-col gap-4 px-6 mb-5">
             <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+                    <h3 class="text-lg font-semibold text-gray-800">
                         Indicadores de Gestión (KPIs)
                     </h3>
-                    <p class="text-theme-xs text-gray-500 dark:text-gray-400">
-                        Centro de capturas y seguimiento operativo. Mostrando <span class="font-semibold text-gray-700 dark:text-gray-200" x-text="filteredRows.length"></span> indicadores.
+                    <p class="text-theme-xs text-gray-500">
+                        Centro de capturas y seguimiento operativo. Mostrando <span class="font-semibold text-gray-700" x-text="filteredRows.length"></span> indicadores.
                     </p>
                 </div>
             </div>
@@ -146,13 +146,13 @@
                     <input type="text" 
                            x-model="searchQuery"
                            placeholder="Buscar por código o nombre..." 
-                           class="w-full rounded-lg border border-gray-300 bg-white pl-10 pr-4 py-2 text-theme-xs text-gray-700 placeholder-gray-400 shadow-theme-xs focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-500">
+                           class="w-full rounded-lg border border-gray-300 bg-white pl-10 pr-4 py-2 text-theme-xs text-gray-700 placeholder-gray-400 shadow-theme-xs focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20">
                 </div>
 
                 <!-- Filtro por Eje -->
                 <div class="relative">
                     <select x-model="selectedEje" 
-                            class="w-full appearance-none rounded-lg border border-gray-300 bg-white px-3.5 py-2 pr-9 text-theme-xs font-medium text-gray-700 shadow-theme-xs focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                            class="w-full appearance-none rounded-lg border border-gray-300 bg-white px-3.5 py-2 pr-9 text-theme-xs font-medium text-gray-700 shadow-theme-xs focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20">
                         <option value="todos">Todos los Ejes</option>
                         <option value="EJE 1">Eje 1. Formación de calidad</option>
                         <option value="EJE 2">Eje 2. Generación de conocimiento</option>
@@ -166,7 +166,7 @@
                 <!-- Filtro por Temática -->
                 <div class="relative">
                     <select x-model="selectedTematica" 
-                            class="w-full appearance-none rounded-lg border border-gray-300 bg-white px-3.5 py-2 pr-9 text-theme-xs font-medium text-gray-700 shadow-theme-xs focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                            class="w-full appearance-none rounded-lg border border-gray-300 bg-white px-3.5 py-2 pr-9 text-theme-xs font-medium text-gray-700 shadow-theme-xs focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20">
                         <option value="todas">Todas las Temáticas</option>
                         <option value="1.1">1.1 Educación para todos</option>
                         <option value="1.2">1.2 Inclusión y Equidad</option>
@@ -182,7 +182,7 @@
                 <!-- Filtro por Semáforo/Estatus -->
                 <div class="relative">
                     <select x-model="selectedEstatus" 
-                            class="w-full appearance-none rounded-lg border border-gray-300 bg-white px-3.5 py-2 pr-9 text-theme-xs font-medium text-gray-700 shadow-theme-xs focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                            class="w-full appearance-none rounded-lg border border-gray-300 bg-white px-3.5 py-2 pr-9 text-theme-xs font-medium text-gray-700 shadow-theme-xs focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20">
                         <option value="todos">Todos los Estatus</option>
                         <option value="En Meta">🟢 En Meta</option>
                         <option value="En Riesgo">🟡 En Riesgo</option>
@@ -198,51 +198,51 @@
         <!-- Tabla -->
         <div class="max-w-full overflow-x-auto">
             <table class="w-full text-start border-collapse">
-                <thead class="border-y border-gray-100 bg-gray-50/75 dark:border-white/[0.05] dark:bg-gray-900">
+                <thead class="border-y border-gray-100 bg-gray-50/75">
                     <tr>
-                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400 text-start">Código</th>
-                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400 text-start">Nombre del Indicador</th>
-                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400 text-center">Temática</th>
-                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400 text-end">Meta</th>
-                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400 text-start">Avance / Cumplimiento</th>
-                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400 text-center">Estatus</th>
-                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400 text-end">Acciones</th>
+                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs text-start">Código</th>
+                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs text-start">Nombre del Indicador</th>
+                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs text-center">Temática</th>
+                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs text-end">Meta</th>
+                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs text-start">Avance / Cumplimiento</th>
+                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs text-center">Estatus</th>
+                        <th class="px-6 py-3 font-medium text-gray-500 text-theme-xs text-end">Acciones</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-white/[0.05]">
+                <tbody class="divide-y divide-gray-100">
                     <template x-for="row in filteredRows" :key="row.codigo">
-                        <tr class="hover:bg-gray-50/60 dark:hover:bg-white/[0.02] transition-colors"
+                        <tr class="hover:bg-gray-50/60 transition-colors"
                             :style="`border-left: 4px solid ${row.ejeColor};`">
                             
                             <!-- 1. Código del Indicador (Morado Institucional) -->
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="font-semibold text-purple-700 dark:text-purple-400 text-theme-sm" x-text="row.codigo"></span>
+                                <span class="font-semibold text-purple-700 text-theme-sm" x-text="row.codigo"></span>
                             </td>
 
                             <!-- 2. Nombre del Indicador -->
                             <td class="px-6 py-4">
-                                <span class="font-medium text-gray-800 text-theme-sm dark:text-gray-200 block" x-text="row.nombre"></span>
+                                <span class="font-medium text-gray-800 text-theme-sm block" x-text="row.nombre"></span>
                             </td>
 
                             <!-- 3. Temática (Badge Pill) -->
                             <td class="px-6 py-4 text-center whitespace-nowrap">
-                                <span class="inline-flex items-center justify-center h-7 px-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-theme-xs font-semibold"
+                                <span class="inline-flex items-center justify-center h-7 px-3 rounded-full bg-gray-100 text-gray-700 text-theme-xs font-semibold"
                                       x-text="row.tematicaCodigo"></span>
                             </td>
 
                             <!-- 4. Meta -->
                             <td class="px-6 py-4 text-end whitespace-nowrap">
-                                <span class="font-semibold text-gray-800 dark:text-gray-200 text-theme-sm" x-text="`${row.meta} ${row.unidad}`"></span>
+                                <span class="font-semibold text-gray-800 text-theme-sm" x-text="`${row.meta} ${row.unidad}`"></span>
                             </td>
 
                             <!-- 5. Avance y Barra de Cumplimiento -->
                             <td class="px-6 py-4 min-w-[200px]">
                                 <div class="flex flex-col gap-1.5">
                                     <div class="flex items-center justify-between text-theme-xs">
-                                        <span class="font-medium text-gray-700 dark:text-gray-300" x-text="`${row.avance} ${row.unidad}`"></span>
-                                        <span class="font-semibold text-gray-500 dark:text-gray-400" x-text="`${getCumplimiento(row.avance, row.meta)}%`"></span>
+                                        <span class="font-medium text-gray-700" x-text="`${row.avance} ${row.unidad}`"></span>
+                                        <span class="font-semibold text-gray-500" x-text="`${getCumplimiento(row.avance, row.meta)}%`"></span>
                                     </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700 overflow-hidden">
+                                    <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                                         <div class="h-2 rounded-full transition-all duration-300"
                                              :class="getProgressBarColor(row.estatus)"
                                              :style="`width: ${getCumplimiento(row.avance, row.meta)}%`">
@@ -281,7 +281,7 @@
                                     <!-- Editar Configuración (Pencil) -->
                                     <button @click="editarIndicador(row)" 
                                             title="Editar indicador"
-                                            class="p-1.5 rounded-lg text-gray-500 hover:text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-800 transition-colors">
+                                            class="p-1.5 rounded-lg text-gray-500 hover:text-gray-800 hover:bg-gray-100 transition-colors">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -291,7 +291,7 @@
                                     <!-- Más Opciones -->
                                     <button @click="masAcciones(row)" 
                                             title="Más acciones"
-                                            class="p-1.5 rounded-lg text-gray-500 hover:text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-800 transition-colors">
+                                            class="p-1.5 rounded-lg text-gray-500 hover:text-gray-800 hover:bg-gray-100 transition-colors">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
                                         </svg>

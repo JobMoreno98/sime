@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AxisController;
+use Symfony\Contracts\Service\Attribute\Required;
+
+include_once 'auth.php';
 
 Route::get('/', [HomeController::class, 'index'])->name('inicio');
 
@@ -11,27 +14,30 @@ Route::get('/', [HomeController::class, 'index'])->name('inicio');
 Route::get('/indicadores', [HomeController::class, 'indicators'])->name('indicadores');
 
 
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/ejes', [AxisController::class, 'index'])
+        ->name('admin.ejes');
+
+    Route::get('/tematicas', function () {
+        return view('pages.admin.tematicas', ['title' => 'Temáticas']);
+    })->name('admin.tematicas');
+
+    Route::get('/indicadores', function () {
+        return view('pages.admin.indicadores', ['title' => 'Indicadores']);
+    })->name('admin.indicadores');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    Route::resource('ejes',AxisController::class);
+
+});
+
 Route::get('/detalle-indicador/{eje}/{tematica}', function ($eje, $tematica) {
     return view('pages.detalle-indicador', [
         'eje' => $eje,
         'tematica' => $tematica,
     ]);
 })->name('detalle-indicador');
-
-
-Route::get('/admin/ejes', [AxisController::class, 'index'])
-    ->name('admin-ejes');
-
-
-Route::get('/admin/tematicas', function () {
-    return view('pages.admin.tematicas', ['title' => 'Temáticas']);
-})->name('admin-tematicas');
-
-Route::get('/admin/indicadores', function () {
-    return view('pages.admin.indicadores', ['title' => 'Indicadores']);
-})->name('admin-indicadores');
-
-Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin-dashboard');
 
 // dashboard pages
 Route::get('/dashboard', function () {
@@ -112,25 +118,3 @@ Route::get('/image', function () {
 Route::get('/videos', function () {
     return view('pages.ui-elements.videos', ['title' => 'Videos']);
 })->name('videos');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

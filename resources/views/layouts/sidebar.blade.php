@@ -8,7 +8,7 @@
 @endphp
 
 <aside id="sidebar"
-    class="fixed flex flex-col mt-0 top-0 px-5 left-0 bg-[#0a2530] dark:bg-gray-900 dark:border-[#3a455b] text-white-900 h-screen transition-all duration-300 ease-in-out z-99999 border-r border-[#3a455b]"
+    class="fixed flex flex-col mt-0 top-0 px-5 left-0 bg-[#0a2530] text-white-900 h-screen transition-all duration-300 ease-in-out z-99999 border-r border-[#3a455b]"
     x-data="{
         openSubmenus: {},
         init() {
@@ -63,11 +63,11 @@
         :class="(!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen) ?
         'xl:justify-center' :
         'justify-start'">
-        <a href="/admin/dashboard" style="margin-left: auto; margin-right: auto;">
+        <a href="{{ route('admin.dashboard') }}" style="margin-left: auto; margin-right: auto;">
             <img x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
                 class="dark:hidden" src="/images/logo/logo-cucsh-blanco.png" alt="Logo" width="150" height="40" />
             <img x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
-                class="hidden dark:block" src="/images/logo/logo-cucsh-blanco.png" alt="Logo" width="150"
+                class="hidden" src="/images/logo/logo-cucsh-blanco.png" alt="Logo" width="150"
                 height="40" />
             <img x-show="!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen"
                 src="/images/logo/logo-cucsh-blanco.png" alt="Logo" width="32" height="32" />
