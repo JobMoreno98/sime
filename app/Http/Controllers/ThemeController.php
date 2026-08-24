@@ -2,63 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreThemeRequest;
+use App\Http\Requests\UpdateThemeRequest;
+use App\Models\Axis;
+use App\Models\Theme;
 use Illuminate\Http\Request;
 
 class ThemeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $tematicas = Theme::with(['axis'])->withCount('indicators')->orderBy('axis_id')->get();
+        $ejes = Axis::orderBy('axis_number')->get(); // para el <select> del modal
+
+        return view('pages.admin.tematicas', compact('tematicas', 'ejes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreThemeRequest $request)
     {
-        //
+        Theme::create($request->validated());
+
+        return redirect()->route('tematicas.index')->with('success', 'Temática creada correctamente.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function update(UpdateThemeRequest $request, Theme $tematica)
     {
-        //
+        $tematica->update($request->validated());
+
+        return redirect()->route('tematicas.index')->with('success', 'Temática actualizada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+   
 }

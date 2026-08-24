@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AxisController;
+use App\Http\Controllers\IndicatorController;
+use App\Http\Controllers\ThemeController;
 use Symfony\Contracts\Service\Attribute\Required;
 
 include_once 'auth.php';
@@ -11,25 +13,24 @@ include_once 'auth.php';
 Route::get('/', [HomeController::class, 'index'])->name('inicio');
 
 
-Route::get('/indicadores', [HomeController::class, 'indicators'])->name('indicadores');
+//Route::get('/indicadores', [HomeController::class, 'indicators'])->name('indicadores');
 
 
 Route::prefix('admin')->middleware('auth')->group(function () {
+
+    Route::resource('ejes', AxisController::class)->names('ejes');
+    /*
     Route::get('/ejes', [AxisController::class, 'index'])
         ->name('admin.ejes');
+*/
+    Route::resource('tematicas', ThemeController::class)->names('tematicas');
 
-    Route::get('/tematicas', function () {
-        return view('pages.admin.tematicas', ['title' => 'Temáticas']);
-    })->name('admin.tematicas');
-
-    Route::get('/indicadores', function () {
-        return view('pages.admin.indicadores', ['title' => 'Indicadores']);
-    })->name('admin.indicadores');
+    Route::resource('indicadores', IndicatorController::class);
+    
+    Route::post('indicadores/{indicador}/avance', [IndicatorController::class, 'storeProgress'])
+        ->name('indicadores.avance');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-
-    Route::resource('ejes',AxisController::class);
-
 });
 
 Route::get('/detalle-indicador/{eje}/{tematica}', function ($eje, $tematica) {

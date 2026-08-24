@@ -10,25 +10,25 @@ class MenuHelper
             [
                 'icon' => 'dashboard',
                 'name' => 'Dashboard',
-                'path' => '/admin/dashboard', 
-                
+                'path' => '/admin/dashboard',
+
             ],
             [
-            'icon' => 'ejes',
-            'name' => 'Ejes Estratégicos',
-            'path' => '/admin/ejes', 
+                'icon' => 'ejes',
+                'name' => 'Ejes Estratégicos',
+                'path' => route('ejes.index'),
             ],
             [
                 'icon' => 'tematicas',
                 'name' => 'Temáticas',
-                'path' => '/admin/tematicas',
+                'path' => route('tematicas.index'),
             ],
             [
                 'icon' => 'indicadores',
                 'name' => 'Indicadores (KPIs)',
-                'path' => '/admin/indicadores', 
+                'path' => '/admin/indicadores',
             ],
-            
+
         ];
     }
 

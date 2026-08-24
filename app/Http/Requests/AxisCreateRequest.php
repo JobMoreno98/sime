@@ -22,9 +22,10 @@ class AxisCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'axis_number' => 'required',
-            'name' => 'required',
-            'description' => 'required'
+            'axis_number' => 'string|max:50',
+            'name'        => 'string|max:255',
+            'description' => 'nullable|string',
+            'color'       => 'nullable|string|max:20',
         ];
     }
 }

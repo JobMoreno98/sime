@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AxisCreateRequest;
+use App\Http\Requests\UpdateAxisRequest;
 use Illuminate\Http\Request;
 use App\Models\Axis;
 
@@ -37,7 +38,7 @@ class AxisController extends Controller
      */
     public function store(AxisCreateRequest $request)
     {
-        $axe = Axis::create($request->validated());
+        Axis::create($request->validated());
         return redirect()->route('ejes.index');
     }
 
@@ -60,9 +61,11 @@ class AxisController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateAxisRequest $request, Axis $eje)
     {
-        //
+        $eje->update($request->validated());
+
+        return redirect()->route('admin.ejes')->with('success', 'Eje actualizado correctamente.');
     }
 
     /**

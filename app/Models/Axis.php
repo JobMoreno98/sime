@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 class Axis extends Model
 {
     protected $guarded = [];
+    
     public function themes()
     {
         return $this->hasMany(Theme::class, 'axis_id', 'id');

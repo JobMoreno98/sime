@@ -16,10 +16,9 @@
             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-
-            <form action="{{ route('ejes.store') }}" method="post">
+            <form :action="isEditing ? editUrl : '{{ route('ejes.store') }}'" method="post">
                 @csrf
-                @method('POST')
+                <input type="hidden" name="_method" :value="isEditing ? 'PUT' : 'POST'">
                 <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
                         <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
@@ -35,10 +34,12 @@
                             <div class="mt-6 space-y-4">
                                 <!-- Código -->
                                 <div>
-                                    <label for="code" class="block text-sm font-medium text-gray-700">Código del
-                                        Eje</label>
-                                    <input type="text" id="code" x-model="form.axis_number" placeholder="Ej. EJE 1"
-                                        name="axis_number"
+                                    <label for="code" class="block text-sm font-medium text-gray-700">
+                                        Código del Eje
+                                        <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" id="code" x-model="form.axis_number"
+                                        placeholder="Ej. EJE 1" name="axis_number"
                                         class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
                                 </div>
 
@@ -52,17 +53,22 @@
 
                                 <!-- Responsable -->
                                 <div>
-                                    <label for="responsible" class="block text-sm font-medium text-gray-700">Descripción</label>
-                                    <input type="text" id="responsible" x-model="form.description"
-                                        placeholder="Ej. Secretaría General" name="description"
-                                        class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
+                                    <label for="responsible"
+                                        class="block text-sm font-medium text-gray-700">Descripción</label>
+                                    <textarea id="description" x-model="form.description" name="description" rows="1"
+                                        placeholder="Ej. Secretaría General" x-ref="description" x-init="$nextTick(() => {
+                                            $refs.description.style.height = 'auto';
+                                            $refs.description.style.height = $refs.description.scrollHeight + 'px'
+                                        })"
+                                        @input="$el.style.height = 'auto'; $el.style.height = $el.scrollHeight + 'px'"
+                                        class="mt-1 block w-full min-h-[44px] resize-none overflow-hidden rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-700 shadow-sm placeholder:text-gray-400 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20">
+                                    </textarea>
                                 </div>
                                 <div>
                                     <label for="responsible" class="block text-sm font-medium text-gray-700">
                                         Color</label>
-                                    <input type="color" id="responsible" x-model="form.color"
-                                        placeholder="Ej. Secretaría General" name="color"
-                                        class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
+                                    <input type="color" id="responsible" x-model="form.color" name="color"
+                                        class="mt-1 block w-full h-12 p-1 rounded-xl border border-gray-300 bg-white shadow-sm cursor-pointer focus:border-purple-500 focus:ring-purple-500" />
                                 </div>
                             </div>
 
