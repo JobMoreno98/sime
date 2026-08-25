@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Indicator extends Model
 {
-    
+
+    protected $appends = ['cumplimiento'];
     protected $fillable = [
         'code',
         'name',
@@ -64,5 +65,46 @@ class Indicator extends Model
     {
         return $this->hasOne(ProgressRecord::class, 'indicator_code', 'code')
             ->latestOfMany('captured_at');
+    }
+
+    protected function cumplimiento(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $actual = $this->latestProgress?->actual_value;
+                $target = $this->shortTermGoal?->target_value;
+                if ($actual === null || !$target || $target == 0) {
+                    return null;
+                }
+
+                return ($actual / $target) * 100;
+            }
+        );
+    }
+
+    /**
+     * Accesor para determinar el Estatus del Indicador
+     */
+    protected function estatus(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $pct = $this->cumplimiento;
+
+                if ($pct === null) {
+                    return 'Sin registrar';
+                }
+
+                if ($pct >= 90) {
+                    return 'En Meta';
+                }
+
+                if ($pct >= 60) {
+                    return 'En Riesgo';
+                }
+
+                return 'Crítico';
+            }
+        );
     }
 }

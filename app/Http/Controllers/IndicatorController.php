@@ -73,6 +73,7 @@ class IndicatorController extends Controller
             'indicador_code' => $indicador->code,
             'indicador_id'   => $indicador->id,
         ]);
+
         $indicador->goals()->updateOrCreate(
             ['indicator_code' => $indicador->code, 'year' => now()->year, 'goal_type' => 'INTERMEDIATE'],
             ['target_value' => $data['short_term_goal']]
@@ -91,5 +92,19 @@ class IndicatorController extends Controller
         ]);
 
         return redirect()->route('indicadores.index')->with('success', 'Avance capturado correctamente.');
+    }
+    public function show_user(Indicator $indicador)
+    {
+        $indicador->load([
+            'theme.axis',
+            'responsibleUser',
+            'shortTermGoal',
+            'latestProgress',
+            'progressRecords' => function ($query) {
+                $query->orderBy('captured_at', 'desc');
+            }
+        ]);
+
+        return view('pages.detalle-indicador', compact('indicador'));
     }
 }

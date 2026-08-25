@@ -98,10 +98,8 @@
                                 <td class="px-6 py-4 min-w-[200px]">
                                     <div class="flex flex-col gap-1.5">
                                         <div class="flex items-center justify-between text-theme-xs">
-                                            <span class="font-medium text-gray-700"
-                                                x-text="row.latest_progress ? `${row.latest_progress.actual_value} ${row.measurement_unit ?? ''}` : 'Sin registrar'"></span>
                                             <span class="font-semibold text-gray-500"
-                                                x-text="row.cumplimiento !== null ? `${row.cumplimiento}%` : '—'"></span>
+                                                x-text="row.cumplimiento !== null ? `${Number(row.cumplimiento).toFixed(2)}%` : '—'"></span>
                                         </div>
                                         <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                                             <div class="h-2 rounded-full transition-all duration-300"

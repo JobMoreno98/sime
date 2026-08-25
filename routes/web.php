@@ -14,6 +14,7 @@ Route::get('/', [HomeController::class, 'index'])->name('inicio');
 
 
 Route::get('/indicadores', [HomeController::class, 'indicators'])->name('indicadores-user');
+Route::get('/indicador/{indicador}', [IndicatorController::class, 'show_user'])->name('indicatores.show');
 
 
 Route::prefix('admin')->middleware('auth')->group(function () {
