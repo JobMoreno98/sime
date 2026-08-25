@@ -34,39 +34,8 @@ class HomeController extends Controller
     }
 
 
-    public function indicators(Request $request)
+    public function indicators()
     {
-
-        $query = Indicator::with([
-            'theme',
-            'theme.axis',
-            'goals',
-            'latestProgress'
-        ]);
-
-
-        if ($request->filled('axis') && $request->axis != "Todos") {
-             $query->whereHas('theme', function ($q) use ($request) {
-                $q->where('axis_id', $request->axis);
-            });
-        }
-
-        if ($request->filled('theme') && $request->theme != "Todas") {
-            $query->where('theme_code', $request->theme);
-        }
-
-        $indicators = $query->get();
-
-        // Inyectamos el ícono a cada objeto de la colección
-        $indicators->transform(function ($indicator) {
-            $indicator->icon_svg = ThemeHelper::getTematicaIconSvg($indicator->theme_code);
-            return $indicator;
-        });
-
-        $axes = Axis::all();
-
-        $themes = Theme::all();
-
-        return view('pages.indicadores', compact('indicators', 'axes', 'themes', 'request'));
+        return view('pages.indicadores');
     }
 }

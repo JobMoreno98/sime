@@ -2,9 +2,6 @@
 
 @section('content')
 
-
-
-
 <section class="hero">
   <div class="wrap hero-grid">
     <div>

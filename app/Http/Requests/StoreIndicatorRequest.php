@@ -28,7 +28,7 @@ class StoreIndicatorRequest extends FormRequest
             'measurement_unit'      => 'nullable|string|max:50',
             'measurement_frequency' => 'nullable|string|max:50',
             'responsible_user_id'   => 'required|exists:users,id',
-            'short_term_goal'       => 'required|numeric|min:0', // meta INTERMEDIATE del año actual
+            'short_term_goal'       => 'required|numeric|min:0',
         ];
     }
 }

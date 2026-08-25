@@ -13,7 +13,7 @@ include_once 'auth.php';
 Route::get('/', [HomeController::class, 'index'])->name('inicio');
 
 
-//Route::get('/indicadores', [HomeController::class, 'indicators'])->name('indicadores');
+Route::get('/indicadores', [HomeController::class, 'indicators'])->name('indicadores-user');
 
 
 Route::prefix('admin')->middleware('auth')->group(function () {
@@ -25,8 +25,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 */
     Route::resource('tematicas', ThemeController::class)->names('tematicas');
 
-    Route::resource('indicadores', IndicatorController::class);
-    
+    Route::resource('indicadores', IndicatorController::class)->names('indicadores')->parameters(['indicadores' => 'indicador']);
+
     Route::post('indicadores/{indicador}/avance', [IndicatorController::class, 'storeProgress'])
         ->name('indicadores.avance');
 

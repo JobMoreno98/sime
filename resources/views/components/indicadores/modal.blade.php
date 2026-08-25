@@ -31,9 +31,11 @@
 
                                 <div class="mt-6 space-y-4">
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700">Código</label>
+                                        <label class="block text-sm font-medium text-gray-700">Código
+                                            <span class="text-red-500">*</span></label>
                                         <input type="text" x-model="form.code" name="code"
-                                            placeholder="Ej. IND-01"
+                                            placeholder="Ej. IND-01" required :readonly="isEditing"
+                                            :class="isEditing ? 'bg-gray-100 cursor-not-allowed text-gray-500' : ''"
                                             class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
                                     </div>
 
@@ -47,32 +49,53 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Temática
                                             <span class="text-red-500">*</span></label>
-                                        <select x-model="form.theme_id" required name="theme_id"
+                                        <select x-model="form.theme_code" required name="theme_code"
                                             class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
                                             <option value="">Selecciona una temática</option>
                                             @foreach ($tematicas as $tematica)
-                                                <option value="{{ $tematica->id }}">
+                                                <option value="{{ $tematica->code }}">
                                                     {{ $tematica->code }} — {{ $tematica->name }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
 
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Responsable
+                                            <span class="text-red-500">*</span></label>
+                                        <select x-model="form.responsible_user_id" required
+                                            name="responsible_user_id"
+                                            class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
+                                            <option value="">Selecciona un responsable</option>
+                                            @foreach ($usuarios as $usuario)
+                                                <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                     <div class="grid grid-cols-2 gap-3">
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700">Meta
-                                                <span class="text-red-500">*</span></label>
-                                            <input type="number" step="0.01" x-model="form.goal" required
-                                                name="goal"
+                                            <label class="block text-sm font-medium text-gray-700">Meta (Corto
+                                                Plazo) <span class="text-red-500">*</span></label>
+                                            <input type="number" step="0.01" x-model="form.short_term_goal"
+                                                required name="short_term_goal"
                                                 class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Unidad
                                                 <span class="text-red-500">*</span></label>
-                                            <input type="text" x-model="form.unit" required name="unit"
-                                                placeholder="%, alumnos, proyectos..."
+                                            <input type="text" x-model="form.measurement_unit" required
+                                                name="measurement_unit" placeholder="%, alumnos, proyectos..."
                                                 class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
                                         </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Frecuencia de
+                                            Medición</label>
+                                        <input type="text" x-model="form.measurement_frequency"
+                                            name="measurement_frequency" placeholder="Mensual, Trimestral..."
+                                            class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
                                     </div>
                                 </div>
                             </div>
@@ -93,42 +116,6 @@
             </template>
 
             <!-- MODO: Capturar avance -->
-            <template x-if="modalMode === 'progress'">
-                <form :action="progressUrl" method="post">
-                    @csrf
-                    <input type="hidden" name="_method" value="PATCH">
-
-                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                        <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                            <h3 class="text-lg font-bold leading-6 text-gray-900">Capturar Avance</h3>
-                            <p class="text-sm text-gray-500 mt-1" x-text="form.name"></p>
-
-                            <div class="mt-6 space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">
-                                        Avance actual (Meta: <span x-text="form.goal"></span> <span
-                                            x-text="form.unit"></span>)
-                                    </label>
-                                    <input type="number" step="0.01" x-model="form.progress" required
-                                        name="progress"
-                                        class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
-                        <button type="submit"
-                            class="inline-flex w-full justify-center rounded-xl bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-700 sm:w-auto transition-colors">
-                            Guardar Avance
-                        </button>
-                        <button type="button" @click="closeModal()"
-                            class="mt-3 inline-flex w-full justify-center rounded-xl bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto transition-colors">
-                            Cancelar
-                        </button>
-                    </div>
-                </form>
-            </template>
             <template x-if="modalMode === 'progress'">
                 <form :action="progressUrl" method="post">
                     @csrf

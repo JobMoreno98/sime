@@ -51,7 +51,10 @@ class IndicatorController extends Controller
 
         $indicador = Indicator::create(collect($data)->except('short_term_goal')->toArray());
 
+        dd($data);
+
         $indicador->goals()->create([
+            'indicator_code' => $data['theme_code'],
             'year'         => now()->year,
             'goal_type'    => 'INTERMEDIATE',
             'target_value' => $data['short_term_goal'],
@@ -66,17 +69,20 @@ class IndicatorController extends Controller
 
         $indicador->update(collect($data)->except('short_term_goal')->toArray());
 
+        \Log::info('Debug goal creation', [
+            'indicador_code' => $indicador->code,
+            'indicador_id'   => $indicador->id,
+        ]);
         $indicador->goals()->updateOrCreate(
-            ['year' => now()->year, 'goal_type' => 'INTERMEDIATE'],
+            ['indicator_code' => $indicador->code, 'year' => now()->year, 'goal_type' => 'INTERMEDIATE'],
             ['target_value' => $data['short_term_goal']]
         );
 
         return redirect()->route('indicadores.index')->with('success', 'Indicador actualizado correctamente.');
     }
+
     public function storeProgress(StoreProgressRequest $request, Indicator $indicador)
     {
-
-    
         $data = $request->validated();
 
         $indicador->progressRecords()->create([

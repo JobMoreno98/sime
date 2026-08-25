@@ -8,6 +8,7 @@ use App\Models\User;
 
 class Indicator extends Model
 {
+    
     protected $fillable = [
         'code',
         'name',
@@ -21,6 +22,7 @@ class Indicator extends Model
     {
         return 'code';
     }
+
 
     public function theme()
     {
