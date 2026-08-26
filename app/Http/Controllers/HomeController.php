@@ -14,23 +14,26 @@ class HomeController extends Controller
     public function index()
     {
         // Consultamos solo lo necesario para el público
-        //$totalIndicators = Indicator::count(); // Ej. 53
-        //$axes = Axis::with('themes')->get();   // Ejes con sus temáticas
-        //$axes = Axis::all();
-        //$axes = Axis::with('themes')->get();
-        $axes = Axis::with([
-            'themes' => function ($query) {
-                $query->withCount('indicators');
-            }
-        ])->get();
-        $countAllIndicators = 0;
-        foreach ($axes as $axis) {
-            $axis->total_indicators = $axis->themes->sum('indicators_count');
-            $countAllIndicators += $axis->total_indicators;
-        }
-        //$recentProgress = ProgressRecord::latest()->take(5)->get(); // Últimos 5 avances
 
-        return view('pages.inicio', compact('axes', 'countAllIndicators'));
+        $axes = Axis::withCount('indicators')
+            ->with([
+                'indicators.latestProgress',
+                'indicators.shortTermGoal'
+            ])
+            ->get();
+
+        $countAllIndicators = $axes->sum('indicators_count');
+
+        $indicators = Indicator::with(['latestProgress', 'shortTermGoal'])->get();
+
+        $cumplimientos = $indicators->map(fn($i) => $i->cumplimiento)->filter(fn($val) => $val !== null);
+
+
+
+        $globalAverage = $cumplimientos->isNotEmpty() ? round($cumplimientos->avg(), 2) : 0;
+
+
+        return view('pages.inicio', compact('axes', 'countAllIndicators', 'globalAverage'));
     }
 
 

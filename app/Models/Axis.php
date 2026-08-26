@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+
 class Axis extends Model
 {
     protected $guarded = [];
-    
+
     public function themes()
     {
         return $this->hasMany(Theme::class, 'axis_id', 'id');
@@ -50,6 +51,36 @@ class Axis extends Model
                     'border' => 'border-l-rose-500',
                 ];
             }
+        );
+    }
+    protected function averagePercentage(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                // Mapeamos los cumplimientos ignorando los nulos (sin avance o sin meta)
+                $cumplimientos = $this->indicators
+                    ->map(fn($indicator) => $indicator->cumplimiento)
+                    ->filter(fn($val) => $val !== null);
+
+                // Si no hay indicadores con avance, retorna 0
+                if ($cumplimientos->isEmpty()) {
+                    return 0;
+                }
+
+                // Calcula el promedio y lo redondea a 2 decimales
+                return round($cumplimientos->avg(), 2);
+            }
+        );
+    }
+    public function indicators()
+    {
+        return $this->hasManyThrough(
+            Indicator::class, // 1. Modelo al que queremos llegar
+            Theme::class,     // 2. Modelo intermedio
+            'axis_id',        // 3. Clave foránea en la tabla 'themes'
+            'theme_code',     // 4. Clave foránea en la tabla 'indicators'
+            'id',             // 5. Clave local en la tabla 'axes'
+            'code'            // 6. Clave local en la tabla 'themes' (que relaciona con theme_code)
         );
     }
 }

@@ -952,13 +952,6 @@
             outline: 2px solid var(--green-acc);
             outline-offset: 2px;
         }
-
-        @media (prefers-reduced-motion:reduce) {
-            * {
-                transition: none !important;
-                animation: none !important;
-            }
-        }
     </style>
 </head>
 
@@ -1064,5 +1057,5 @@
     @livewireScripts
 
 </body>
-
+@stack('name')
 </html>
