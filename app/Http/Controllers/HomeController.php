@@ -28,10 +28,7 @@ class HomeController extends Controller
 
         $cumplimientos = $indicators->map(fn($i) => $i->cumplimiento)->filter(fn($val) => $val !== null);
 
-
-
         $globalAverage = $cumplimientos->isNotEmpty() ? round($cumplimientos->avg(), 2) : 0;
-
 
         return view('pages.inicio', compact('axes', 'countAllIndicators', 'globalAverage'));
     }

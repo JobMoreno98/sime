@@ -9,12 +9,11 @@
                 <p>Visualiza el progreso de los objetivos estratégicos de la universidad para una gestión ágil y basada en
                     evidencia.</p>
             </div>
-            <div class="donut-card">
+            <div class="donut-card" style="margin:auto;">
                 <span class="label">Cumplimiento Global</span>
                 <div class="donut-wrap">
                     <canvas id="donutChart" width="220" height="220"></canvas>
                     <div class="donut-center">
-                        <!-- Texto impreso dinámicamente desde Laravel -->
                         <span class="pct">{{ number_format($globalAverage ?? 0, 2) }}%</span>
                         <span class="yr">2025–2026</span>
                     </div>
