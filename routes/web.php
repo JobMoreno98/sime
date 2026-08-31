@@ -6,7 +6,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AxisController;
 use App\Http\Controllers\IndicatorController;
 use App\Http\Controllers\ThemeController;
-use Symfony\Contracts\Service\Attribute\Required;
 
 include_once 'auth.php';
 
@@ -15,7 +14,6 @@ Route::get('/', [HomeController::class, 'index'])->name('inicio');
 
 Route::get('/indicadores', [HomeController::class, 'indicators'])->name('indicadores-user');
 Route::get('/indicador/{indicador}', [IndicatorController::class, 'show_user'])->name('indicatores.show');
-
 
 Route::prefix('admin')->middleware('auth')->group(function () {
 
