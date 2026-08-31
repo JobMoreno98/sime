@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+    $title = 'Ejes Estratégicos ';
+@endphp
+
 @section('content')
     <div x-data="ejesController">
 
@@ -65,7 +69,7 @@
                                     $percentage = $axis->progress_percentage ?? 0;
                                     if ($percentage >= 75) {
                                         $colorClass = 'bg-emerald-500';
-                                        $borderClass = 'border-l-purple-600'; 
+                                        $borderClass = 'border-l-purple-600';
                                     } elseif ($percentage >= 50) {
                                         $colorClass = 'bg-blue-600';
                                         $borderClass = 'border-l-blue-600';

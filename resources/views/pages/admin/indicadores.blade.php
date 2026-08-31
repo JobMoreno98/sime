@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+
+@php
+    $title = 'Indicadores de Gestión ';
+@endphp
+
 @section('content')
     <div x-data="indicadoresController">
         <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white pt-4 shadow-sm">

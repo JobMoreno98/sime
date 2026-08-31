@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+
+@php
+    $title = 'Temáticas ';
+@endphp
+
 @section('content')
 
 <div x-data="tematicasController">
