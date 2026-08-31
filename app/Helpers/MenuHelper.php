@@ -16,7 +16,7 @@ class MenuHelper
             [
                 'icon' => 'ejes',
                 'name' => 'Ejes Estratégicos',
-                'path' => route('ejes.index'),
+                'path' => route('admin.ejes'),
             ],
             [
                 'icon' => 'tematicas',

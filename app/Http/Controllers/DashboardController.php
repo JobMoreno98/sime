@@ -10,57 +10,40 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // 1. Obtener todos los indicadores con sus relaciones necesarias
-        $indicators = Indicator::with([
-            'theme.axis',
-            'goals',
-            'latestProgress',
-            'responsibleUser'
-        ])->get();
+        // 1. Cargamos ejes con sus indicadores precargados para el accesor average_percentage
+        $axes = Axis::with(['indicators.latestProgress', 'indicators.shortTermGoal'])->get();
 
-        // 2. Tarjetas KPI Superiores
+        // 2. Cargamos todos los indicadores con sus relaciones necesarias para el dashboard
+        $indicators = Indicator::with(['latestProgress', 'shortTermGoal', 'theme.axis', 'responsibleUser'])->get();
+
         $totalIndicators = $indicators->count();
-        
-        $enMetaCount    = $indicators->filter(fn($i) => $i->status === 'meta')->count();
-        $enRiesgoCount  = $indicators->filter(fn($i) => $i->status === 'riesgo')->count();
-        $criticosCount  = $indicators->filter(fn($i) => $i->status === 'critico')->count();
 
-        // Avance global promedio de todos los indicadores
-        $globalProgress = $totalIndicators > 0 
-            ? round($indicators->avg(fn($i) => $i->percentage), 1) 
-            : 0;
+        // 3. Evaluamos semáforos basados en la propiedad $indicator->cumplimiento
+        $enMeta = $indicators->filter(fn($i) => $i->cumplimiento !== null && $i->cumplimiento >= 90);
+        $enRiesgo = $indicators->filter(fn($i) => $i->cumplimiento !== null && $i->cumplimiento >= 60 && $i->cumplimiento < 90);
+        $criticos = $indicators->filter(fn($i) => $i->cumplimiento !== null && $i->cumplimiento < 60);
 
-        // 3. Avance Promedio por Eje Estratégico
-        $axes = Axis::with(['themes.indicators.goals', 'themes.indicators.latestProgress'])->get();
-        
+        // 4. Promedio global excluyendo nulos
+        $validCumplimientos = $indicators->map(fn($i) => $i->cumplimiento)->filter(fn($v) => $v !== null);
+        $globalProgress = $validCumplimientos->isNotEmpty() ? round($validCumplimientos->avg(), 2) : 0;
+
+        // 5. Mapeo de avance por Eje Estratégico
         $axesProgress = $axes->map(function ($axis) {
-            $axisIndicators = $axis->themes->flatMap->indicators;
-            $avg = $axisIndicators->count() > 0 
-                ? round($axisIndicators->avg(fn($i) => $i->percentage), 1) 
-                : 0;
-
             return [
-                'id'         => $axis->id,
-                'name'       => $axis->name,
-                'number'     => $axis->axis_number,
-                'percentage' => $avg,
+                'number' => $axis->code ?? $axis->id,
+                'name' => $axis->name,
+                'percentage' => $axis->average_percentage,
             ];
         });
 
-
-        // 4. Indicadores Críticos (Tabla inferior - Filtrar los que están en 'critico')
-        $criticalIndicators = $indicators
-            ->filter(fn($i) => $i->status === 'critico')
-            ->take(5); // Tomamos los primeros 5 para la vista
-
-        return view('pages.admin.dashboard', compact(
-            'globalProgress',
-            'totalIndicators',
-            'enMetaCount',
-            'enRiesgoCount',
-            'criticosCount',
-            'axesProgress',
-            'criticalIndicators'
-        ));
+        return view('pages.admin.dashboard', [
+            'globalProgress' => $globalProgress,
+            'totalIndicators' => $totalIndicators,
+            'enMetaCount' => $enMeta->count(),
+            'enRiesgoCount' => $enRiesgo->count(),
+            'criticosCount' => $criticos->count(),
+            'axesProgress' => $axesProgress,
+            'criticalIndicators' => $criticos->values(),
+        ]);
     }
 }

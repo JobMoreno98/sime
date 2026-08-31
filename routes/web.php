@@ -20,10 +20,11 @@ Route::get('/indicador/{indicador}', [IndicatorController::class, 'show_user'])-
 Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::resource('ejes', AxisController::class)->names('ejes');
-    /*
+
+    
     Route::get('/ejes', [AxisController::class, 'index'])
         ->name('admin.ejes');
-*/
+
     Route::resource('tematicas', ThemeController::class)->names('tematicas');
 
     Route::resource('indicadores', IndicatorController::class)->names('indicadores')->parameters(['indicadores' => 'indicador']);
@@ -41,10 +42,6 @@ Route::get('/detalle-indicador/{eje}/{tematica}', function ($eje, $tematica) {
     ]);
 })->name('detalle-indicador');
 
-// dashboard pages
-Route::get('/dashboard', function () {
-    return view('pages.dashboard.ecommerce', ['title' => 'E-commerce Dashboard']);
-})->name('dashboard');
 
 // calender pages
 Route::get('/calendar', function () {
@@ -56,36 +53,11 @@ Route::get('/profile', function () {
     return view('pages.profile', ['title' => 'Profile']);
 })->name('profile');
 
-// form pages
-Route::get('/form-elements', function () {
-    return view('pages.form.form-elements', ['title' => 'Form Elements']);
-})->name('form-elements');
-
-// tables pages
-Route::get('/basic-tables', function () {
-    return view('pages.tables.basic-tables', ['title' => 'Basic Tables']);
-})->name('basic-tables');
-
 // pages
-
-Route::get('/blank', function () {
-    return view('pages.blank', ['title' => 'Blank']);
-})->name('blank');
-
 // error pages
 Route::get('/error-404', function () {
     return view('pages.errors.error-404', ['title' => 'Error 404']);
 })->name('error-404');
-
-// chart pages
-Route::get('/line-chart', function () {
-    return view('pages.chart.line-chart', ['title' => 'Line Chart']);
-})->name('line-chart');
-
-Route::get('/bar-chart', function () {
-    return view('pages.chart.bar-chart', ['title' => 'Bar Chart']);
-})->name('bar-chart');
-
 
 // authentication pages
 Route::get('/signin', function () {
@@ -95,28 +67,3 @@ Route::get('/signin', function () {
 Route::get('/signup', function () {
     return view('pages.auth.signup', ['title' => 'Sign Up']);
 })->name('signup');
-
-// ui elements pages
-Route::get('/alerts', function () {
-    return view('pages.ui-elements.alerts', ['title' => 'Alerts']);
-})->name('alerts');
-
-Route::get('/avatars', function () {
-    return view('pages.ui-elements.avatars', ['title' => 'Avatars']);
-})->name('avatars');
-
-Route::get('/badge', function () {
-    return view('pages.ui-elements.badges', ['title' => 'Badges']);
-})->name('badges');
-
-Route::get('/buttons', function () {
-    return view('pages.ui-elements.buttons', ['title' => 'Buttons']);
-})->name('buttons');
-
-Route::get('/image', function () {
-    return view('pages.ui-elements.images', ['title' => 'Images']);
-})->name('images');
-
-Route::get('/videos', function () {
-    return view('pages.ui-elements.videos', ['title' => 'Videos']);
-})->name('videos');
