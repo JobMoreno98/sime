@@ -82,6 +82,22 @@ class IndicatorController extends Controller
         return redirect()->route('indicadores.index')->with('success', 'Indicador actualizado correctamente.');
     }
 
+    public function show(Indicator $indicador)
+    {
+        $indicador->load([
+            'theme.axis',
+            'responsibleUser',
+            'shortTermGoal',
+            'latestProgress',
+            'progressRecords' => function ($query) {
+                $query->orderBy('captured_at', 'desc');
+            }
+        ]);
+
+        return view('pages.admin.indicadores.show', compact('indicador'));
+    }
+
+
     public function storeProgress(StoreProgressRequest $request, Indicator $indicador)
     {
         $data = $request->validated();

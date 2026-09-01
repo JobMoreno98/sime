@@ -34,16 +34,6 @@
                 <h2 class="text-xl font-bold text-gray-900">Dashboard</h2>
                 <p class="text-theme-xs text-gray-500 mt-0.5">Plan de Desarrollo CUCSH (2025–2031)</p>
             </div>
-
-            <div class="flex items-center gap-2.5">
-                <button @click="capturarNuevoAvance()" 
-                        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-theme-xs font-semibold shadow-sm transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                    </svg>
-                    <span>Capturar Avance</span>
-                </button>
-            </div>
         </div>
 
         <!-- BLOQUE 1: METRICAS CLAVE (KPIs) -->
@@ -165,21 +155,21 @@
 
                     <div class="grid grid-cols-3 gap-2 text-center pt-2">
                         <div class="p-2.5 rounded-xl bg-emerald-50">
-                            <span class="block text-theme-xs font-semibold text-emerald-700">🟢 En Meta</span>
+                            <span class="block text-theme-xs font-semibold text-emerald-700">En Meta</span>
                             <span class="text-base font-bold text-gray-800">{{ $enMetaCount }}</span>
                             <span class="block text-[10px] text-gray-500">
                                 {{ $totalIndicators > 0 ? number_format(($enMetaCount / $totalIndicators) * 100, 1) : 0 }}%
                             </span>
                         </div>
                         <div class="p-2.5 rounded-xl bg-amber-50">
-                            <span class="block text-theme-xs font-semibold text-amber-700">🟡 En Riesgo</span>
+                            <span class="block text-theme-xs font-semibold text-amber-700">En Riesgo</span>
                             <span class="text-base font-bold text-gray-800">{{ $enRiesgoCount }}</span>
                             <span class="block text-[10px] text-gray-500">
                                 {{ $totalIndicators > 0 ? number_format(($enRiesgoCount / $totalIndicators) * 100, 1) : 0 }}%
                             </span>
                         </div>
                         <div class="p-2.5 rounded-xl bg-rose-50">
-                            <span class="block text-theme-xs font-semibold text-rose-700">🔴 Críticos</span>
+                            <span class="block text-theme-xs font-semibold text-rose-700">Críticos</span>
                             <span class="text-base font-bold text-gray-800">{{ $criticosCount }}</span>
                             <span class="block text-[10px] text-gray-500">
                                 {{ $totalIndicators > 0 ? number_format(($criticosCount / $totalIndicators) * 100, 1) : 0 }}%
@@ -199,7 +189,7 @@
                     <button @click="activeTab = 'criticos'"
                             :class="activeTab === 'criticos' ? 'border-teal-600 text-teal-600 font-semibold' : 'border-transparent text-gray-500 hover:text-gray-700'"
                             class="pb-3 border-b-2 text-theme-sm transition-colors flex items-center gap-2">
-                        <span>🔴 Indicadores Críticos</span>
+                        <span>Indicadores Críticos</span>
                         <span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 text-theme-xs font-bold">
                             {{ $criticalIndicators->count() }}
                         </span>

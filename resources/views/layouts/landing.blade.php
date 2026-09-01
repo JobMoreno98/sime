@@ -32,7 +32,7 @@
                 <a href="{{ route('inicio') }}" class="flex items-center gap-3.5 group">
                     <div
                         class="w-12 h-12 flex items-center justify-center rounded-xl bg-white/5 p-1 border border-white/10 group-hover:border-teal-500/50 transition-colors">
-                        <img src="/images/logo/logo-cucsh-blanco.png" alt="CUCSH Logo"
+                        <img src="{{ asset('images/logo/logo-cucsh-blanco.png') }}" alt="CUCSH Logo"
                             class="w-full h-full object-contain">
                     </div>
                     <div class="flex flex-col">
@@ -49,18 +49,33 @@
                         class="text-xs font-bold text-slate-300 hover:text-white uppercase tracking-wider transition-colors">
                         PDI 2025-2031
                     </a>
-                    <a href="/indicadores"
+                    <a href="{{ route('indicadores-user') }}"
                         class="text-xs font-bold text-slate-300 hover:text-teal-400 uppercase tracking-wider transition-colors">
                         Explora Indicadores
                     </a>
-                    <a href="/signin"
-                        class="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-sm transition-all hover:shadow-teal-900/40">
-                        Ingresar
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2.4" stroke-linecap="round">
-                            <path d="M5 12h14M13 6l6 6-6 6" />
-                        </svg>
-                    </a>
+
+                    @auth
+                        <!-- Opción visible cuando el usuario SÍ inició sesión -->
+                        <a href="{{ route('admin.dashboard') }}"
+                            class="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-sm transition-all hover:shadow-teal-900/40">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span>{{ Auth::user()->name }}</span>
+                        </a>
+                    @else
+                        <!-- Opción visible cuando es un visitante (GUEST) -->
+                        <a href="{{ route('signin') }}"
+                            class="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-sm transition-all hover:shadow-teal-900/40">
+                            Ingresar
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.4" stroke-linecap="round">
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg>
+                        </a>
+                    @endauth
                 </nav>
 
                 <!-- Botón Menú Móvil -->

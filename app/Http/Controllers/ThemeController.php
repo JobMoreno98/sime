@@ -32,5 +32,9 @@ class ThemeController extends Controller
         return redirect()->route('tematicas.index')->with('success', 'Temática actualizada correctamente.');
     }
 
-   
+    public function show($id)
+    {
+        $theme = Theme::findOrFail($id);
+        return view('pages.admin.tematicas.show', compact('theme'));
+    }
 }

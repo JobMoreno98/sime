@@ -138,10 +138,6 @@
                                     </td>
                                     <td class="px-6 py-5 text-center whitespace-nowrap">
                                         <div class="flex items-center justify-center gap-2 text-gray-500">
-                                            <!-- Ver -->
-                                            <button @click="verDetalle({{ $axis->id }})" class="...">
-                                                detalles
-                                            </button>
                                             <button type="button" @click="editarEje(@js($axis))"
                                                 title="Editar Eje"
                                                 class="p-1.5 rounded-lg hover:bg-gray-100 hover:text-purple-600 transition-colors">
