@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateThemeRequest;
 use App\Models\Axis;
 use App\Models\Theme;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class ThemeController extends Controller
 {
@@ -36,5 +37,16 @@ class ThemeController extends Controller
     {
         $theme = Theme::findOrFail($id);
         return view('pages.admin.tematicas.show', compact('theme'));
+    }
+
+    public function destroy(Theme $tematica): RedirectResponse
+    {
+        if ($tematica->indicators()->exists()) {
+            return redirect()->back()->with('error', 'No se puede eliminar la temática "' . $tematica->name . '" porque tiene indicadores asociados. Reasigna o elimina los indicadores primero.');
+        }
+
+        $tematica->delete();
+
+        return redirect()->route('tematicas.index')->with('success', 'Temática eliminada correctamente.');
     }
 }

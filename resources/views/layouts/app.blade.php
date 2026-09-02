@@ -7,7 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 
     <title>{{ $title ?? 'Dashboard' }} | SIME · Sistema Inteligente de Datos para la Decisión</title>
 
@@ -95,29 +96,27 @@
     </script>
 
     <style>
-        *{
+        * {
             font-family: 'Montserrat' !important;
         }
     </style>
-    
+
 </head>
 
-<body
-    x-data="{ 'loaded': true}"
-    x-init="$store.sidebar.isExpanded = window.innerWidth >= 1280;
-    const checkMobile = () => {
-        if (window.innerWidth < 1280) {
-            $store.sidebar.setMobileOpen(false);
-            $store.sidebar.isExpanded = false;
-        } else {
-            $store.sidebar.isMobileOpen = false;
-            $store.sidebar.isExpanded = true;
-        }
-    };
-    window.addEventListener('resize', checkMobile);">
+<body x-data="{ 'loaded': true }" x-init="$store.sidebar.isExpanded = window.innerWidth >= 1280;
+const checkMobile = () => {
+    if (window.innerWidth < 1280) {
+        $store.sidebar.setMobileOpen(false);
+        $store.sidebar.isExpanded = false;
+    } else {
+        $store.sidebar.isMobileOpen = false;
+        $store.sidebar.isExpanded = true;
+    }
+};
+window.addEventListener('resize', checkMobile);">
 
     {{-- preloader --}}
-    <x-common.preloader/>
+    <x-common.preloader />
     {{-- preloader end --}}
 
     <div class="min-h-screen xl:flex">
@@ -134,6 +133,19 @@
             @include('layouts.app-header')
             <!-- app header end -->
             <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+                @if (session('success'))
+                    <div
+                        class="mb-4 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-theme-xs font-semibold flex items-center justify-between">
+                        <span>{{ session('success') }}</span>
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div
+                        class="mb-4 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-theme-xs font-semibold flex items-center justify-between">
+                        <span>{{ session('error') }}</span>
+                    </div>
+                @endif
                 @yield('content')
             </div>
         </div>

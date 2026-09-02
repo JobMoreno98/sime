@@ -20,6 +20,14 @@
                 </svg>
                 Volver
             </a>
+            <form action="{{ route('tematicas.destroy', $theme) }}" method="POST"
+                onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta temática?');" class="inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="text-rose-600 hover:text-rose-800 text-theme-xs font-semibold">
+                    Eliminar
+                </button>
+            </form>
         </div>
 
         <!-- HEADER DE LA TEMÁTICA -->

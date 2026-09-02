@@ -10,6 +10,7 @@ use App\Models\Indicator;
 use App\Models\Theme;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class IndicatorController extends Controller
 {
@@ -122,5 +123,16 @@ class IndicatorController extends Controller
         ]);
 
         return view('pages.detalle-indicador', compact('indicador'));
+    }
+
+    public function destroy(Indicator $indicator): RedirectResponse
+    {
+        // Si la base de datos no tiene eliminación en cascada (cascadeOnDelete), limpia manualmente los registros hijos:
+        $indicator->progressLogs()->delete();
+        $indicator->goals()->delete();
+
+        $indicator->delete();
+
+        return redirect()->route('indicadores.index')->with('success', 'Indicador eliminado correctamente.');
     }
 }
