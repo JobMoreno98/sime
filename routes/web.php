@@ -62,6 +62,8 @@ Route::get('/signin', function () {
     return view('pages.auth.signin', ['title' => 'Sign In']);
 })->name('signin');
 
+/*
 Route::get('/signup', function () {
     return view('pages.auth.signup', ['title' => 'Sign Up']);
 })->name('signup');
+*/

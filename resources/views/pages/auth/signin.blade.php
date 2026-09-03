@@ -11,7 +11,7 @@
                         <svg class="stroke-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <path d="M12.7083 5L7.5 10.2083L12.7083 15.4167" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-                        Back to dashboard
+                       Regresar
                     </a>
                 </div>
                 <div class="mx-auto flex w-full max-w-md flex-1 flex-col justify-center">
@@ -20,9 +20,6 @@
                             <h1 class="text-title-sm sm:text-title-md mb-2 font-semibold text-gray-800">
                                 {{ __('Sign In') }}
                             </h1>
-                            <p class="text-sm text-gray-500">
-                                Enter your email and password to sign in!
-                            </p>
                         </div>
                         <div>
                             <form method="POST" action="{{ route('login') }}">
@@ -93,12 +90,15 @@
                                     </div>
                                 </div>
                             </form>
+                            {{-- 
                             <div class="mt-5">
                                 <p class="text-center text-sm font-normal text-gray-700 sm:text-start">
                                     Don't have an account?
                                     <a href="/signup" class="text-brand-500 hover:text-brand-600">Sign Up</a>
                                 </p>
                             </div>
+
+                             --}}
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,6 @@
 
             <div class="bg-brand-950 relative hidden h-full w-full items-center lg:grid lg:w-1/2">
                 <div class="z-1 flex items-center justify-center">
-                    <!-- ===== Common Grid Shape Start ===== -->
                     <x-common.common-grid-shape/>
                     <div class="flex max-w-xs flex-col items-center">
                         <a href="/" class="mb-4 block">
