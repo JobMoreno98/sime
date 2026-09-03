@@ -26,7 +26,7 @@
         class="absolute right-0 mt-[17px] flex w-[260px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg z-50"
         style="display: none;">
         <!-- User Info -->
-        <div class="px-4 py-2">
+        <div class="px-4 py-2" style="overflow-wrap: break-word;">
             <span class="block font-medium text-gray-700 text-theme-sm">{{ Auth::user()->name }}</span>
             <span class="mt-0.5 block text-theme-xs text-gray-500">{{ Auth::user()->email }}</span>
         </div>
@@ -94,8 +94,7 @@
             @csrf --}}
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <x-dropdown-link :href="route('logout')"
-                onclick="event.preventDefault(); this.closest('form').submit();">
+            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
                 {{ __('Log Out') }}
             </x-dropdown-link>
         </form>
