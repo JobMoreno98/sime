@@ -45,7 +45,7 @@
 
                 <!-- Navegación Escritorio -->
                 <nav class="hidden md:flex items-center gap-6">
-                    <a href="/storage/pdfs/CUCSH - PDCUyS 2025-2031.pdf" target="_blank"
+                    <a href="{{ asset('plan-de-desarrollo-cucsh-2025-2031.pdf') }}" target="_blank"
                         class="text-xs font-bold text-slate-300 hover:text-white uppercase tracking-wider transition-colors">
                         PDI 2025-2031
                     </a>
