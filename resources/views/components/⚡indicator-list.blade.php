@@ -133,7 +133,6 @@ new class extends Component {
 
                     <div class="field">
                         <label>Eje</label>
-                        <!-- Usamos wire:model.live (Livewire v3) o wire:model (Livewire v2) para actualizar al instante -->
                         <select wire:model.live="selectedAxis">
                             <option value="Todos">Todos</option>
                             @foreach ($axes as $axis)
@@ -220,6 +219,7 @@ new class extends Component {
                             <td>
                                 <span class="badge {{ $badgeClass }}">
                                     {{ $indicator->estatus }}
+                                    id {{ dd($indicator->theme->id) }}
                                 </span>
                             </td>
                             <td>{{ $indicator->latestProgress?->actual_value !== null ? number_format($indicator->latestProgress->actual_value, 2) : '—' }}

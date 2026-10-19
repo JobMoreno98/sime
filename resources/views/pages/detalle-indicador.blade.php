@@ -42,7 +42,7 @@
 
             <div class="flex flex-col md:flex-row md:items-start gap-5">
                 <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white shrink-0 shadow-md border border-white/10" style="background-color: {{ $axisColor }}">
-                    {!! $indicador->icon_svg ?? '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>' !!}
+                   <img class="p-1" src="{{  asset('images/logos/' . $indicador->theme?->axis?->id . '.png')  }}" alt="">
                 </div>
                 <div class="space-y-2">
                     <div class="flex items-center gap-3 flex-wrap">

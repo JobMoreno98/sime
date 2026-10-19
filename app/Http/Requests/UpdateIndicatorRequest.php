@@ -22,6 +22,7 @@ class UpdateIndicatorRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'code'=> 'required|string',
             'name'                  => 'required|string',
             'theme_code'            => 'required|exists:themes,code',
             'measurement_unit'      => 'nullable|string|max:50',

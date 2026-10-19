@@ -17,7 +17,7 @@ class IndicatorController extends Controller
     public function index()
     {
         $indicadores = Indicator::with(['theme.axis', 'responsibleUser', 'shortTermGoal', 'latestProgress'])
-            ->latest()
+            ->latest()->orderBy('code')
             ->get()
             ->map(function ($indicador) {
                 $meta = $indicador->shortTermGoal?->target_value;
@@ -52,8 +52,6 @@ class IndicatorController extends Controller
 
         $indicador = Indicator::create(collect($data)->except('short_term_goal')->toArray());
 
-        dd($data);
-
         $indicador->goals()->create([
             'indicator_code' => $data['theme_code'],
             'year'         => now()->year,
@@ -67,8 +65,10 @@ class IndicatorController extends Controller
     public function update(UpdateIndicatorRequest $request, Indicator $indicador)
     {
         $data = $request->validated();
-
-        $indicador->update(collect($data)->except('short_term_goal')->toArray());
+        //dd(collect($data)->except('short_term_goal')->toArray());
+        $indicador->update(
+            collect($data)->except('short_term_goal')->toArray()
+        );
 
         \Log::info('Debug goal creation', [
             'indicador_code' => $indicador->code,
@@ -79,6 +79,8 @@ class IndicatorController extends Controller
             ['indicator_code' => $indicador->code, 'year' => now()->year, 'goal_type' => 'INTERMEDIATE'],
             ['target_value' => $data['short_term_goal']]
         );
+
+        //dd($indicador);
 
         return redirect()->route('indicadores.index')->with('success', 'Indicador actualizado correctamente.');
     }

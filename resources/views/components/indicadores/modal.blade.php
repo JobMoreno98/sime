@@ -20,6 +20,9 @@
                     @csrf
                     <input type="hidden" name="_method" :value="isEditing ? 'PUT' : 'POST'">
 
+                    <input type="hidden" name="id"  x-model="form.id" :readonly="isEditing"
+                                            :class="isEditing ? 'bg-gray-100 cursor-not-allowed text-gray-500' : ''">
+
                     <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                         <div class="sm:flex sm:items-start">
                             <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
@@ -32,11 +35,12 @@
                                 <div class="mt-6 space-y-4">
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Código
-                                            <span class="text-red-500">*</span></label>
+                                            <span class="text-red-500">*</span>
+                                        </label>
                                         <input type="text" x-model="form.code" name="code"
-                                            placeholder="Ej. IND-01" required :readonly="isEditing"
-                                            :class="isEditing ? 'bg-gray-100 cursor-not-allowed text-gray-500' : ''"
-                                            class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
+                                            placeholder="Ej. IND-01" required 
+                                            class="mt-1 block w-full rounded-xl border-gray-300 
+                                            shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
                                     </div>
 
                                     <div>

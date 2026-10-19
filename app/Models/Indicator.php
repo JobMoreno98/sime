@@ -21,12 +21,6 @@ class Indicator extends Model
         'responsible_user_id'
     ];
 
-    public function getRouteKeyName(): string
-    {
-        return 'code';
-    }
-
-
     public function theme()
     {
         return $this->belongsTo(Theme::class, 'theme_code', 'code');

@@ -74,7 +74,6 @@
 
                     <div class="field">
                         <label>Eje</label>
-                        <!-- Usamos wire:model.live (Livewire v3) o wire:model (Livewire v2) para actualizar al instante -->
                         <select wire:model.live="selectedAxis">
                             <option value="Todos">Todos</option>
                             @foreach ($axes as $axis)
@@ -148,7 +147,8 @@
                                 <div class="ind-cell">
                                     <div class="ind-ico"
                                         style="background:{{ $indicator->theme?->axis?->color ?? 'var(--navy-900)' }}">
-                                        {!! $indicator->icon_svg !!}
+                                        <img src="{{  }}" alt="">
+                                        
                                     </div>
                                     <div class="ind-text">
                                         <a href="#">
@@ -156,11 +156,13 @@
                                             <span>{{ $indicator->theme?->name ?? 'Sin temática' }}</span>
                                         </a>
                                     </div>
+                                    
                                 </div>
                             </td>
                             <td>
                                 <span class="badge {{ $badgeClass }}">
                                     {{ $indicator->estatus }}
+                                    id {{ $indicator->theme->id }}
                                 </span>
                             </td>
                             <td>{{ $indicator->latestProgress?->actual_value !== null ? number_format($indicator->latestProgress->actual_value, 2) : '—' }}

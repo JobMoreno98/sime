@@ -83,7 +83,8 @@
                                 @endphp
                                 <!-- ... Cálculo de porcentajes igual al tuyo ... -->
                                 <!-- Asegúrate de pasar los parámetros correctos al botón de editar -->
-                                <tr class="hover:bg-gray-50/60 transition-colors border-l-4 {{ $borderClass }}">
+                                <tr class="hover:bg-gray-50/60 transition-colors border-l-4 "
+                                    style="border-left: {{ $axis->color }} 5px solid;">
                                     <!-- Código (EJE 1, EJE 2, etc.) -->
                                     <td class="px-6 py-5 whitespace-nowrap">
                                         <span class="font-bold text-purple-600 text-theme-xs tracking-wider uppercase">

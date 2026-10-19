@@ -207,9 +207,10 @@
                             <tr class="hover:bg-slate-50/50 transition-colors">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-9 h-9 rounded-lg flex items-center justify-center text-white shrink-0 shadow-sm"
+                                        <div class="w-12 h-12 rounded-lg flex items-center justify-center text-white shrink-0 shadow-sm"
                                             style="background: {{ $indicator->theme?->axis?->color ?? '#0d2f3d' }}">
-                                            {!! $indicator->icon_svg !!}
+                                            <img class="p-1" src="{{ asset('images/logos/' . $indicator->theme?->axis?->id . '.png') }}"
+                                                alt="">
                                         </div>
                                         <div class="flex flex-col">
                                             <a href="{{ route('indicatores.show', $indicator) }}"
@@ -226,6 +227,7 @@
                                     <span
                                         class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border {{ $badgeStyle }}">
                                         {{ $indicator->estatus }}
+
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 font-medium text-slate-700 whitespace-nowrap">

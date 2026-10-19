@@ -64,10 +64,10 @@
                     <tbody class="divide-y divide-gray-100">
                         <template x-for="row in filteredRows" :key="row.code">
                             <tr class="hover:bg-gray-50/60 transition-colors"
-                                :style="`border-left: 4px solid ${row.theme?.axis?.color ?? '#a855f7'};`">
+                                :style="`border-left: 5px solid ${row.theme?.axis?.color ?? '#a855f7'};`">
 
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="font-semibold text-purple-700 text-theme-sm" x-text="row.code"></span>
+                                    <span class="font-semibold text-purple-700 text-theme-sm" x-text="row.code" :style="`color:${row.theme?.axis?.color ?? '#a855f7'};`"></span>
                                 </td>
                                 <td class="px-6 py-4">
                                     <span class="font-medium text-gray-800 text-theme-sm block" x-text="row.name"></span>
@@ -86,7 +86,7 @@
                                         x-text="`${row.short_term_goal?.target_value ?? '—'} ${row.measurement_unit ?? ''}`"></span>
                                 </td>
                                 <td class="px-6 py-4 text-end whitespace-nowrap">
-                                    
+
                                     <div class="flex items-center justify-end gap-1.5">
                                         <!-- Botón Ver Indicador -->
                                         <a :href="'{{ route('indicadores.show', ':indicador') }}'.replace(':indicador', row.code)"
@@ -162,8 +162,9 @@
                     tableRowData: @json($indicadores),
                     showModal: false,
                     isEditing: false,
-                    modalMode: 'config', // 'config' | 'progress'
+                    modalMode: 'config',
                     form: {
+                        id: '',
                         code: '',
                         name: '',
                         theme_code: '',
@@ -191,9 +192,9 @@
                     },
 
                     get editUrl() {
-                        return this.form.code ?
-                            '{{ route('indicadores.update', ':code') }}'.replace(':code', this.form
-                                .code) :
+                        return this.form.id ?
+                            '{{ route('indicadores.update', ':id') }}'.replace(':id', this.form
+                                .id) :
                             '';
                     },
 
@@ -249,6 +250,7 @@
                         this.modalMode = 'config';
                         this.isEditing = true;
                         this.form = {
+                            id: row.id,
                             code: row.code,
                             name: row.name || '',
                             theme_code: row.theme_code || '',
