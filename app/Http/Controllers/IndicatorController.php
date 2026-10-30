@@ -130,7 +130,7 @@ class IndicatorController extends Controller
     public function destroy(Indicator $indicator): RedirectResponse
     {
         // Si la base de datos no tiene eliminación en cascada (cascadeOnDelete), limpia manualmente los registros hijos:
-        $indicator->progressLogs()->delete();
+        $indicator->progressRecords()->delete();
         $indicator->goals()->delete();
 
         $indicator->delete();

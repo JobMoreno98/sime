@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateIndicatorRequest extends FormRequest
 {
@@ -22,7 +23,11 @@ class UpdateIndicatorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code'=> 'required|string',
+            'code' => [
+                'required',
+                'string',
+                Rule::unique('indicators', 'code')->ignore($this->route('indicator')),
+            ],
             'name'                  => 'required|string',
             'theme_code'            => 'required|exists:themes,code',
             'measurement_unit'      => 'nullable|string|max:50',
