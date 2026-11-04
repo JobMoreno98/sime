@@ -19,13 +19,16 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::resource('ejes', AxisController::class)->names('ejes');
 
-    
+
     Route::get('/ejes', [AxisController::class, 'index'])
         ->name('admin.ejes');
 
     Route::resource('tematicas', ThemeController::class)->names('tematicas');
 
-    Route::resource('indicadores', IndicatorController::class)->names('indicadores')->parameters(['indicadores' => 'indicador']);
+    Route::resource('indicadores', IndicatorController::class)->except('delete')->names('indicadores')->parameters(['indicadores' => 'indicador']);
+
+    Route::delete('indicadores/{indicador:code}', [IndicatorController::class, 'destroy'])
+        ->name('indicadores.destroy');
 
     Route::post('indicadores/{indicador}/avance', [IndicatorController::class, 'storeProgress'])
         ->name('indicadores.avance');

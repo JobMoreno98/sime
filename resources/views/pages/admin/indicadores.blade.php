@@ -67,7 +67,8 @@
                                 :style="`border-left: 5px solid ${row.theme?.axis?.color ?? '#a855f7'};`">
 
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="font-semibold text-purple-700 text-theme-sm" x-text="row.code" :style="`color:${row.theme?.axis?.color ?? '#a855f7'};`"></span>
+                                    <span class="font-semibold text-purple-700 text-theme-sm" x-text="row.code"
+                                        :style="`color:${row.theme?.axis?.color ?? '#a855f7'};`"></span>
                                 </td>
                                 <td class="px-6 py-4">
                                     <span class="font-medium text-gray-800 text-theme-sm block" x-text="row.name"></span>
@@ -282,15 +283,14 @@
                     eliminarIndicador(indicador) {
                         if (!confirm(
                                 `¿Estás seguro de que deseas eliminar el indicador "${indicador.code} - ${indicador.name}"?`
-                            )) {
+                                )) {
                             return;
                         }
 
                         const form = document.createElement('form');
                         form.method = 'POST';
-                        // Usa el comodín ':indicador' asignado por la ruta resource
-                        form.action = '{{ route('indicadores.destroy', ':indicador') }}'.replace(
-                            ':indicador', indicador.code);
+                        form.action = '{{ route('indicadores.destroy', '__ID__') }}'
+                            .replace('__ID__', encodeURIComponent(indicador.code));
 
                         const csrfInput = document.createElement('input');
                         csrfInput.type = 'hidden';
@@ -302,8 +302,7 @@
                         methodInput.name = '_method';
                         methodInput.value = 'DELETE';
 
-                        form.appendChild(csrfInput);
-                        form.appendChild(methodInput);
+                        form.append(csrfInput, methodInput);
                         document.body.appendChild(form);
                         form.submit();
                     },

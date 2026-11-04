@@ -127,13 +127,15 @@ class IndicatorController extends Controller
         return view('pages.detalle-indicador', compact('indicador'));
     }
 
-    public function destroy(Indicator $indicator): RedirectResponse
+    public function destroy(Indicator $indicador): RedirectResponse
     {
+        //dd($indicador);
         // Si la base de datos no tiene eliminación en cascada (cascadeOnDelete), limpia manualmente los registros hijos:
-        $indicator->progressRecords()->delete();
-        $indicator->goals()->delete();
+        $indicador->progressRecords()->delete();
+        $indicador->goals()->delete();
 
-        $indicator->delete();
+        $indicador->delete();
+        
 
         return redirect()->route('indicadores.index')->with('success', 'Indicador eliminado correctamente.');
     }

@@ -20,8 +20,8 @@
                     @csrf
                     <input type="hidden" name="_method" :value="isEditing ? 'PUT' : 'POST'">
 
-                    <input type="hidden" name="id"  x-model="form.id" :readonly="isEditing"
-                                            :class="isEditing ? 'bg-gray-100 cursor-not-allowed text-gray-500' : ''">
+                    <input type="hidden" name="id" x-model="form.id" :readonly="isEditing"
+                        :class="isEditing ? 'bg-gray-100 cursor-not-allowed text-gray-500' : ''">
 
                     <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                         <div class="sm:flex sm:items-start">
@@ -38,9 +38,12 @@
                                             <span class="text-red-500">*</span>
                                         </label>
                                         <input type="text" x-model="form.code" name="code"
-                                            placeholder="Ej. IND-01" required 
+                                            placeholder="Ej. IND-01" required
                                             class="mt-1 block w-full rounded-xl border-gray-300 
                                             shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
+                                        @error('code')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                     <div>
@@ -48,6 +51,9 @@
                                             <span class="text-red-500">*</span></label>
                                         <input type="text" x-model="form.name" required name="name"
                                             class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
+                                        @error('name')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                     <div>
@@ -62,27 +68,32 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                        @error('theme_code')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Responsable
                                             <span class="text-red-500">*</span></label>
-                                        <select x-model="form.responsible_user_id" required
-                                            name="responsible_user_id"
+                                        <select x-model="form.responsible_user_id" required name="responsible_user_id"
                                             class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
                                             <option value="">Selecciona un responsable</option>
                                             @foreach ($usuarios as $usuario)
                                                 <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
                                             @endforeach
                                         </select>
+                                        @error('responsible_user_id')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                     <div class="grid grid-cols-2 gap-3">
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Meta (Corto
                                                 Plazo) <span class="text-red-500">*</span></label>
-                                            <input type="number" step="0.01" x-model="form.short_term_goal"
-                                                required name="short_term_goal"
+                                            <input type="number" step="0.01" x-model="form.short_term_goal" required
+                                                name="short_term_goal"
                                                 class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
                                         </div>
                                         <div>
@@ -100,6 +111,9 @@
                                         <input type="text" x-model="form.measurement_frequency"
                                             name="measurement_frequency" placeholder="Mensual, Trimestral..."
                                             class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm px-3 py-2 border">
+                                        @error('measurement_frequency')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
