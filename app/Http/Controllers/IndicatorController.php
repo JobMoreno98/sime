@@ -117,7 +117,7 @@ class IndicatorController extends Controller
     public function storeProgress(StoreProgressRequest $request, Indicator $indicador)
     {
         $data = $request->validated();
-
+        
         $indicador->progressRecords()->create([
             ...$data,
             'captured_by_user_id' => auth()->id(),

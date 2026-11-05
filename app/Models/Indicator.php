@@ -12,6 +12,7 @@ class Indicator extends Model
 
     use SoftDeletes;
     protected $appends = ['cumplimiento'];
+
     protected $fillable = [
         'code',
         'name',
@@ -78,9 +79,6 @@ class Indicator extends Model
         );
     }
 
-    /**
-     * Accesor para determinar el Estatus del Indicador
-     */
     protected function estatus(): Attribute
     {
         return Attribute::make(
@@ -102,5 +100,9 @@ class Indicator extends Model
                 return 'Crítico';
             }
         );
+    }
+    public function getRouteKeyName(): string
+    {
+        return 'code';
     }
 }
