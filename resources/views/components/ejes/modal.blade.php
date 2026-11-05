@@ -22,7 +22,6 @@
                 <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
                         <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
-
                             <!-- Título Dinámico -->
                             <h3 class="text-lg font-bold leading-6 text-gray-900" id="modal-title"
                                 x-text="isEditing ? 'Editar Eje Estratégico' : 'Nuevo Eje Estratégico'"></h3>

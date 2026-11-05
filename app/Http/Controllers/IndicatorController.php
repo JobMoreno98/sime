@@ -16,8 +16,19 @@ class IndicatorController extends Controller
 {
     public function index()
     {
-        $indicadores = Indicator::with(['theme.axis', 'responsibleUser', 'shortTermGoal', 'latestProgress'])
-            ->latest()->orderBy('code')
+        $indicadores = Indicator::with([
+            'theme.axis',
+            'responsibleUser',
+            'shortTermGoal',
+            'latestProgress'
+        ])
+            ->orderByRaw("
+        REGEXP_REPLACE(
+            CONCAT('.', code),
+            '\\.([0-9]+)',
+            CONCAT('.', LPAD('\\1', 10, '0'))
+        ) ASC
+    ")
             ->get()
             ->map(function ($indicador) {
                 $meta = $indicador->shortTermGoal?->target_value;
@@ -64,6 +75,8 @@ class IndicatorController extends Controller
 
     public function update(UpdateIndicatorRequest $request, Indicator $indicador)
     {
+        dd($indicador);
+
         $data = $request->validated();
         //dd(collect($data)->except('short_term_goal')->toArray());
         $indicador->update(
@@ -135,7 +148,7 @@ class IndicatorController extends Controller
         $indicador->goals()->delete();
 
         $indicador->delete();
-        
+
 
         return redirect()->route('indicadores.index')->with('success', 'Indicador eliminado correctamente.');
     }
