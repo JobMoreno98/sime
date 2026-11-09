@@ -21,6 +21,7 @@
             </div>
         </div>
 
+        {{--  
         <div class="wrap search-panel">
             <div class="search-box">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -33,6 +34,7 @@
                 <button id="btnFiltrar">FILTRAR</button>
             </div>
         </div>
+--}}
     </section>
 
     <main class="wrap">
@@ -106,7 +108,7 @@
                 </div>
             </div>
         </section>
-
+{{--  
         <section class="section" id="reporte" style="padding-top:0">
             <div class="cta-grid">
                 <div class="cta-card">
@@ -150,6 +152,7 @@
                 </div>
             </div>
         </section>
+--}}
     </main>
 
 @endsection
